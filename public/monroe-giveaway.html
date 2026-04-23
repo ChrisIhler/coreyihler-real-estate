@@ -141,7 +141,7 @@
         <p>Free entry. No purchase necessary. Open to Washington State residents age 18 and older. One entry per person.</p>
       </div>
 
-      <form class="gv-form" id="giveawayForm" autocomplete="on" novalidate>
+      <form class="gv-form" id="giveawayForm" autocomplete="on">
 
         <!-- Entrant info -->
         <div class="form-row two-col">
@@ -514,14 +514,9 @@
       }
     });
 
-    // Auto-focus phone field when a marketing consent is checked
-    ['consentCorey', 'consentTLS', 'consentMCV'].forEach(id => {
-      document.getElementById(id).addEventListener('change', function() {
-        if (this.checked && !document.getElementById('phone').value.trim()) {
-          document.getElementById('phone').focus();
-        }
-      });
-    });
+    // Phone-required-when-consent-checked is enforced at submit time above.
+    // We deliberately do NOT auto-focus the phone field on consent change —
+    // stealing focus scrolled the page and disoriented entrants mid-read.
   </script>
 
 </body>
