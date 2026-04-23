@@ -48,6 +48,38 @@
       padding-right: 2.5rem;
       cursor: pointer;
     }
+
+    /* Bigger, more legible consent headlines */
+    .consent .consent-head {
+      font-size: 1.08rem;
+      font-weight: 700;
+      line-height: 1.35;
+      margin-bottom: 0.55rem;
+      color: var(--ink);
+    }
+
+    /* Smaller, denser fine print */
+    .consent .fine,
+    .consent .not-required {
+      font-size: 0.72rem;
+      line-height: 1.5;
+    }
+
+    /* Required section visual accent — scroll-safe and hard to miss */
+    .required-section {
+      background: var(--cream);
+      padding: var(--s3);
+      margin-top: var(--s4);
+      border-left: 3px solid var(--accent);
+    }
+    .required-section .consent.required {
+      background: var(--paper);
+    }
+    .required-section-title {
+      color: var(--accent) !important;
+      font-size: 0.8rem !important;
+      letter-spacing: 0.22em !important;
+    }
   </style>
 </head>
 <body>
@@ -221,31 +253,9 @@
           </div>
         </div>
 
-        <!-- REQUIRED consents -->
+        <!-- OPTIONAL consents (shown first — entrants can skip, but most should consider) -->
         <div class="consent-section">
-          <div class="consent-section-title">Required to Enter</div>
-
-          <div class="consent required">
-            <input type="checkbox" id="eligibility" name="eligibility" required>
-            <label for="eligibility">
-              <span class="consent-head"><span class="req-tag">Required</span>Eligibility &amp; Sweepstakes Entry</span>
-              I am 18 or older and a Washington State resident. I have read and agree to the <a href="/official-rules.html" target="_blank">Official Rules</a>. I authorize the Sponsors to contact me at the email and phone number I provided solely to notify me if I am selected as a winner and to fulfill prize delivery.
-              <span class="fine">This contact is for sweepstakes administration only and is not marketing.</span>
-            </label>
-          </div>
-
-          <div class="consent required">
-            <input type="checkbox" id="terms" name="terms" required>
-            <label for="terms">
-              <span class="consent-head"><span class="req-tag">Required</span>Terms &amp; Privacy</span>
-              I have read and agree to the <a href="/terms.html" target="_blank">Terms of Use</a> and acknowledge my personal information will be handled in accordance with the <a href="/privacy.html" target="_blank">Privacy Policy</a>.
-            </label>
-          </div>
-        </div>
-
-        <!-- OPTIONAL consents -->
-        <div class="consent-section">
-          <div class="consent-section-title">Optional · Marketing Communications</div>
+          <div class="consent-section-title">Optional · Stay in Touch</div>
 
           <div class="consent optional">
             <input type="checkbox" id="consentCorey" name="consentCorey">
@@ -274,6 +284,28 @@
               By checking this box, I authorize <strong>Mill Creek View</strong> and its authorized service providers to contact me at the telephone number and email address I provided with marketing and informational messages about community news, local events, publication updates, and advertiser offers, including phone calls that may use automated telephone dialing systems, prerecorded voice messages, or AI-generated voices; text messages that may be automated, AI-assisted, AI-drafted, or sent via automated messaging platforms; and emails that may be automated or AI-assisted.
               <span class="fine">Contacts may occur even if my number is on a federal, state, or internal Do Not Call list. Message frequency varies (typically 2–10 per month). Message and data rates may apply. Reply STOP to unsubscribe from texts, HELP for help, or click unsubscribe in any email. Calls may be recorded for quality and compliance. I can revoke this consent at any time.</span>
               <span class="not-required">This consent is not required to enter the sweepstakes, win a prize, or purchase any product or service.</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- REQUIRED consents (bottom, directly above Submit for maximum visibility) -->
+        <div class="consent-section required-section">
+          <div class="consent-section-title required-section-title">Required to Submit</div>
+
+          <div class="consent required">
+            <input type="checkbox" id="eligibility" name="eligibility" required>
+            <label for="eligibility">
+              <span class="consent-head"><span class="req-tag">Required</span>Eligibility &amp; Sweepstakes Entry</span>
+              I am 18 or older and a Washington State resident. I have read and agree to the <a href="/official-rules.html" target="_blank">Official Rules</a>. I authorize the Sponsors to contact me at the email and phone number I provided solely to notify me if I am selected as a winner and to fulfill prize delivery.
+              <span class="fine">This contact is for sweepstakes administration only and is not marketing.</span>
+            </label>
+          </div>
+
+          <div class="consent required">
+            <input type="checkbox" id="terms" name="terms" required>
+            <label for="terms">
+              <span class="consent-head"><span class="req-tag">Required</span>Terms &amp; Privacy</span>
+              I have read and agree to the <a href="/terms.html" target="_blank">Terms of Use</a> and acknowledge my personal information will be handled in accordance with the <a href="/privacy.html" target="_blank">Privacy Policy</a>.
             </label>
           </div>
         </div>
