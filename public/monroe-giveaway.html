@@ -316,32 +316,40 @@
       };
 
       try {
-        // Endpoint stub — wire to Cloudflare Worker / GHL webhook once deployed
-        const endpoint = '/api/submit-entry';
+        // Google Apps Script Web App endpoint — appends a row to the Google Sheet
+        // owned by ihlerconsulting@gmail.com. No email notifications, database-only storage.
+        const endpoint = 'https://script.google.com/macros/s/AKfycbyLVjce7592X4WZ6tJUwk9l2wRfD3A4HQ-OqiKW4OEU3TTMhj-xflW46QrBeCClRatd/exec';
 
+        // Apps Script web apps require text/plain to avoid a CORS preflight (OPTIONS)
+        // request that Google's runtime does not handle. The script still parses the
+        // body as JSON via JSON.parse(e.postData.contents).
         const response = await fetch(endpoint, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
+          mode: 'cors',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(payload),
+          redirect: 'follow'
         });
 
-        if (response.ok || response.status === 404) {
-          // 404 is a stub-mode fallback — still show success so booth operators
-          // aren't blocked before the endpoint is wired. Record locally for recovery.
+        if (response.ok) {
+          // Success — also keep a local backup on the tablet as belt-and-suspenders
+          // recovery in case the Sheet is ever accidentally cleared
           try {
             const backup = JSON.parse(localStorage.getItem('giveaway_entries') || '[]');
             backup.push(payload);
             localStorage.setItem('giveaway_entries', JSON.stringify(backup));
           } catch (storageErr) {
-            console.warn('Local backup failed:', storageErr);
+            console.warn('Local backup failed (non-blocking):', storageErr);
           }
           window.location.href = '/thank-you.html';
         } else {
-          throw new Error('Submission failed');
+          throw new Error('Endpoint returned ' + response.status);
         }
       } catch (err) {
         console.error('Submit error:', err);
-        // Local backup on network failure — offline tablet scenario
+        // Network failure or service outage — save locally so booth ops aren't blocked.
+        // Staff can recover entries from localStorage at end of shift via browser devtools:
+        //   JSON.parse(localStorage.getItem('giveaway_entries_failed'))
         try {
           const backup = JSON.parse(localStorage.getItem('giveaway_entries_failed') || '[]');
           backup.push(payload);
